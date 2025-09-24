@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Account Login</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f2f4f7; margin:0; display:flex; align-items:center; justify-content:center; height:100vh; }
+    .card { background:white; padding:28px; border-radius:8px; width:360px; box-shadow:0 6px 20px rgba(0,0,0,0.08); }
+    h1{margin:0 0 8px;font-size:20px}
+    p{margin:0 0 16px;color:#555;font-size:14px}
+    input{width:100%;padding:10px;margin:8px 0;border:1px solid #d7dbe0;border-radius:6px}
+    button{width:100%;padding:10px;border:0;border-radius:6px;background:#0b69ff;color:white;font-weight:600}
+    .notice{background:#fffbea;border:1px solid #ffecb5;padding:10px;border-radius:6px;margin-top:12px;font-size:13px}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45)}
+    .modal .box{background:white;padding:20px;border-radius:8px;max-width:520px}
+    .links a{display:inline-block;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-labelledby="title">
+    <h1 id="title">CoinLab</h1>
+
+    <form id="simForm" onsubmit="return handleSubmit(event)" autocomplete="off" novalidate>
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" placeholder="you@company.com" required>
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="Enter password" required>
+
+      <button type="submit">Login</button>
+    </form>
+
+  </div>
+
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="box">
+      <h2>Security Awareness: This Email or Password is incorrect please try later</h2>
+      <p id="modalText"></p>
+      <div class="links">
+        <a href="#" onclick="closeModal();return false;">Close</a>
+ 
+      </div>
+      <div id="resources" style="display:none;margin-top:12px">
+        <p><strong>Quick tips</strong></p>
+        <ul>
+          <li>Check sender address and hover over links.</li>
+          <li>Look for HTTPS and valid domain names.</li>
+          <li>When in doubt, contact IT directly (do not click links).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleSubmit(e){
+      e.preventDefault();
+
+      // intentionally do NOT send or store credentials
+      // collect only simulated metrics in-memory for demo purposes
+      const submitted = {
+        time: new Date().toISOString(),
+        emailFieldFilled: !!document.getElementById('email').value,
+        passwordFieldFilled: !!document.getElementById('password').value
+      };
+
+      // (For a real authorized program you would log safe metrics server-side with consent)
+      console.log("TRANSFERING SUBMISSION (Sending...):", submitted);
+
+      // Show immediate training modal
+      const modal = document.getElementById('modal');
+      const modalText = document.getElementById('modalText');
+      modalText.innerText = "Please Login after 5 minute starting at " + new Date().toLocaleString() + ". Thank you for understanding";
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+
+      // Prevent any real credential handling — clear fields
+      document.getElementById('password').value = '';
+      return false;
+    }
+
+    function closeModal(){
+      const modal = document.getElementById('modal');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+    }
+
+    function showResources(){
+      document.getElementById('resources').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
